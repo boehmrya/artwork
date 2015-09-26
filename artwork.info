@@ -1,0 +1,4 @@
+name = Artwork
+description = Defines a new artwork entity.
+core = 7.x
+files[] = artwork.module

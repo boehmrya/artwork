@@ -1,0 +1,56 @@
+<?php
+
+/**
+* @file
+* Artwork Module File
+*
+* This module creates a new fieldable artwork entity.
+*
+*/
+
+/**
+* Implements hook_entity_info().
+*/
+function artwork_entity_info() {
+  $return['artwork'] = array(
+    'label' => t('Artwork'),
+    'controller class' => 'ArtworkController',
+    'base table' => 'artwork',
+    'revision table' => 'artwork_revision',
+    'uri callback' => 'artwork_uri',
+    'fieldable' => TRUE,
+    'entity keys' => array(
+      'id' => 'aid',
+      'revision' => 'vid',
+      'bundle' => 'type',
+      'label' => 'title',
+    ),
+    'bundle keys' => array(
+      'bundle' => 'type',
+    ),
+    'static cache' => TRUE,
+    'bundles' => array(),
+    'view modes' => array(
+      'full' => array(
+        'label' => t('Full Content'),
+        'custom settings' => FALSE,
+      ),
+      'teaser' => array(
+        'label' => t('Teaser'),
+        'custom settings' => FALSE,
+      ),
+    ),
+  );
+  foreach (artwork_types() as $type => $info) {
+  	$return['artwork']['bundles'][$type] = array(
+      'label' => $info->name,
+      'admin' => array(
+      	'path' => 'admin/structure/artworks/manage/%artwork_type',
+        'real path' => 'admin/structure/artworks/manage/' . str_replace('_', '-', $type),
+        'bundle argument' => 4,
+        'access arguments' => array('administer artworks'),
+      ),
+  	);
+  }
+  return $return;
+}
