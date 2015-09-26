@@ -82,6 +82,15 @@ function artwork_types() {
 }
 
 
+function artwork_type_load($type) {
+  $types = artwork_types();
+  $type = str_replace('-','_', $type);
+  return isset($types[$type]) ? $types[$type] : FALSE;
+}
+
+
+
+
 
 
 
