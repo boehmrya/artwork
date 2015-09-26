@@ -54,3 +54,34 @@ function artwork_entity_info() {
   }
   return $return;
 }
+
+
+//Uri callback function.  See hook_entity_info().
+function artwork_uri($artwork) {
+  return array(
+    'path' => 'artwork/' . $artwork->aid,
+  );
+}
+
+
+function artwork_types() {
+  $types = &drupal_static(__FUNCTION__);
+  if (empty($types)) {
+  	$types['painting'] = (object)array(
+      'type' => 'painting',
+      'name' => t('Painting'),
+      'description' => t('A picture made with paint.')
+  	);
+  	$types['sculpture'] = (object)array(
+      'type' => 'sculpture',
+      'name' => t('Sculpture'),
+      'description' => t('A carving made out of stone or wood.')
+  	);
+  }
+  return $types;
+}
+
+
+
+
+
