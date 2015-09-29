@@ -97,7 +97,7 @@ function artwork_menu() {
     'title' => 'Manage artworks',
     'description' => 'Manage artworks',
     'page callback' => 'artwork_overview_types',
-    'access arguements' => array('administer artworks');
+    'access arguements' => array('administer content'),
   );
   $items['admin/structure/artworks/manage/%artwork_type'] = array(
     'title' => 'View artwork type',
@@ -105,7 +105,7 @@ function artwork_menu() {
     'title arguments' => array(4),
     'page callback' => 'artwork_information',
     'page arguments' => array(4),
-    'access arguments' => array('administer artworks'),
+    'access arguments' => array('administer content'),
   );
   $items['admin/structure/artworks/manage/%artwork_type/view'] = array(
     'title' => 'View',
@@ -115,12 +115,26 @@ function artwork_menu() {
 }
 
 
+//Page Callback
 function artwork_overview_types() {
   foreach(artwork_types() as $type => $info) {
     $type_url_str = str_replace('_', '-', $type);
     $label = t('View @type', array('@type' => $info->name));
     $items[] = l($label, 'admin/structure/artworks/manage/' . $type_url_str);
   }
+  return theme('item_list', array('items' => $items));
+}
+
+
+//Title Callback
+function artwork_type_page_title($type) {
+  return t('Manage @type', array('@type' => $type->name));
+}
+
+
+//Page Callback
+function artwork_information($artwork_type) {
+  return $artwork_type->name . ': ' . $artwork_type->description;
 }
 
 
