@@ -89,6 +89,41 @@ function artwork_type_load($type) {
 }
 
 
+/**
+* Implements hook_menu().
+*/
+function artwork_menu() {
+  $items['admin/structure/artworks'] = array(
+    'title' => 'Manage artworks',
+    'description' => 'Manage artworks',
+    'page callback' => 'artwork_overview_types',
+    'access arguements' => array('administer artworks');
+  );
+  $items['admin/structure/artworks/manage/%artwork_type'] = array(
+    'title' => 'View artwork type',
+    'title callback' => 'artwork_type_page_title',
+    'title arguments' => array(4),
+    'page callback' => 'artwork_information',
+    'page arguments' => array(4),
+    'access arguments' => array('administer artworks'),
+  );
+  $items['admin/structure/artworks/manage/%artwork_type/view'] = array(
+    'title' => 'View',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+  return $items;
+}
+
+
+function artwork_overview_types() {
+  foreach(artwork_types() as $type => $info) {
+    $type_url_str = str_replace('_', '-', $type);
+    $label = t('View @type', array('@type' => $info->name));
+    $items[] = l($label, 'admin/structure/artworks/manage/' . $type_url_str);
+  }
+}
+
+
 
 
 
