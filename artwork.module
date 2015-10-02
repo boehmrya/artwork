@@ -241,6 +241,14 @@ function artwork_form($form, &$form_state, $artwork) {
 }
 
 
+//Validation function for artwork_form().
+function artwork_form_validate($form, &$form_state) {
+  $artwork = $form_state['artwork'];
+  //Field validation
+  field_attach_form_validate('artwork', $artwork, $form, $form_state);
+}
+
+
 
 
 

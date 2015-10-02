@@ -12,5 +12,13 @@ class ArtworkController extends DrupalDefaultEntityController {
   function artwork_load_multiple($aids = array(), $conditions = array(), $reset = FALSE) {
   	return entity_load('artwork', $aids, $conditions, $reset);
   }
+
+  public function create($type = '') {
+  	return (object) array(
+      'aid' => '',
+      'type' => $type,
+      'title' => '',
+  	);
+  }
   
 }
